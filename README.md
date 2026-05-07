@@ -24,7 +24,7 @@ This notebook walks through every stage of a production-style ML workflow:
 | **SimpleHouse.csv** | Residential listings with price as target | ~117 MB |
 | **ComplexHouse.csv** | High-dimensional property data with `ValueofHome` as target | ~42 MB |
 
-> ⚠️ **Datasets are not included** in this repository due to their size. Place them inside a `data/` folder to run the notebook locally.
+Both datasets are included in this repository as compressed files. See **[📥 Download & Setup](#-download--setup)** below for instructions.
 
 Three dataset versions were maintained throughout the pipeline:
 - `Simple` — cleaned Kaggle residential dataset
@@ -54,6 +54,47 @@ Three dataset versions were maintained throughout the pipeline:
 
 ---
 
+## 📥 Download & Setup
+
+### ComplexHouse Dataset
+Directly available as a single file:
+```
+Data_Complex.zip  →  ComplexHouse.csv (~42 MB)
+```
+
+### SimpleHouse Dataset
+Due to GitHub's 25 MB file limit, this dataset is split into two parts:
+```
+Data_Simple_part1.zip.001  (24 MB)
+Data_Simple_part1.zip.002  (8 MB)
+```
+
+**Reconstruct the file before use:**
+
+**Linux / macOS:**
+```bash
+cat Data_Simple_part1.zip.001 Data_Simple_part1.zip.002 > SimpleHouse.zip
+unzip SimpleHouse.zip
+```
+
+**Windows (PowerShell):**
+```powershell
+Get-Content Data_Simple_part1.zip.001, Data_Simple_part1.zip.002 -Encoding Byte -Raw | Set-Content SimpleHouse.zip -Encoding Byte
+Expand-Archive SimpleHouse.zip
+```
+
+### Place datasets in the correct folder
+After extracting, move the CSV files into the `data/` directory:
+```
+house-pricing-ml/
+├── data/
+│   ├── SimpleHouse.csv
+│   └── ComplexHouse.csv
+└── House_Pricing_Submit.ipynb
+```
+
+---
+
 ## 🛠️ Tech Stack
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
@@ -70,7 +111,7 @@ Three dataset versions were maintained throughout the pipeline:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/cbarney23/house-pricing-ml.git
+git clone https://github.com/marcosgale/house-pricing-ml.git
 cd house-pricing-ml
 ```
 
@@ -80,14 +121,7 @@ pip install pandas numpy scikit-learn pycaret matplotlib
 ```
 
 ### 3. Add the datasets
-Place `SimpleHouse.csv` and `ComplexHouse.csv` inside a `data/` folder:
-```
-house-pricing-ml/
-├── data/
-│   ├── SimpleHouse.csv
-│   └── ComplexHouse.csv
-└── House_Pricing_Submit.ipynb
-```
+Follow the **[📥 Download & Setup](#-download--setup)** instructions above to extract and place the CSV files inside the `data/` folder.
 
 ### 4. Open and run the notebook
 ```bash
@@ -100,10 +134,16 @@ jupyter notebook House_Pricing_Submit.ipynb
 
 ```
 house-pricing-ml/
-├── House_Pricing_Submit.ipynb   # Final submission notebook
-├── House_Pricing.ipynb          # Working/draft notebook
-├── .gitignore                   # Excludes data files and logs
-└── README.md                    # This file
+├── data/                          # Datasets (extracted locally, not tracked by git)
+│   ├── SimpleHouse.csv
+│   └── ComplexHouse.csv
+├── Data_Complex.zip               # ComplexHouse dataset (compressed)
+├── Data_Simple_part1.zip.001      # SimpleHouse dataset — part 1 of 2
+├── Data_Simple_part1.zip.002      # SimpleHouse dataset — part 2 of 2
+├── House_Pricing_Submit.ipynb     # Final submission notebook
+├── House_Pricing.ipynb            # Working/draft notebook
+├── .gitignore                     # Excludes extracted data files and logs
+└── README.md                      # This file
 ```
 
 ---
